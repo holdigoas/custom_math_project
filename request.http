@@ -1,0 +1,10 @@
+### Generar QR
+POST http://localhost:3000/api/v1/qr
+Content-Type: application/json
+
+{
+    "matrix": [
+        [1, 2, 3],
+        [4, 5, 6]
+    ]
+}

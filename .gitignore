@@ -1,0 +1,50 @@
+==============================
+Go - Binaries and builds
+==============================
+
+*.exe *.exe~ *.dll *.so *.dylib *.test *.out *.a *.o
+
+Build directories
+
+/bin/ /build/ /dist/
+
+==============================
+Go - Dependencies and tools
+==============================
+
+vendor/
+
+Go workspace
+
+go.work go.work.sum
+
+==============================
+Environment variables and secrets
+==============================
+
+.env .env.* !.env.example
+
+==============================
+Logs
+==============================
+
+*.log logs/
+
+==============================
+IDEs and editors
+==============================
+VS Code / Antigravity
+
+.vscode/ .idea/ *.swp *.swo *~
+
+==============================
+Operating systems
+==============================
+
+.DS_Store Thumbs.db Desktop.ini
+
+==============================
+Temporary files
+==============================
+
+tmp/ temp/ .cache/ coverage.out coverage.html
