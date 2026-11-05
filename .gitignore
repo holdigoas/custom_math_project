@@ -1,50 +1,78 @@
-==============================
-Go - Binaries and builds
-==============================
+==========================================
+GO - Backend (go-first-api)
+==========================================
+Binaries
 
 *.exe *.exe~ *.dll *.so *.dylib *.test *.out *.a *.o
 
 Build directories
 
-/bin/ /build/ /dist/
+**/bin/ **/build/ **/dist/
 
-==============================
-Go - Dependencies and tools
-==============================
+Go dependencies
 
-vendor/
+**/vendor/
 
 Go workspace
 
 go.work go.work.sum
 
-==============================
-Environment variables and secrets
-==============================
+Coverage
 
-.env .env.* !.env.example
+coverage.out coverage.html
 
-==============================
+==========================================
+NODE.JS - node-second-api
+==========================================
+Dependencies
+
+**/node_modules/
+
+Build outputs
+
+**/.next/ **/.nuxt/ **/.output/ **/.vite/ **/dist/
+
 Logs
-==============================
 
-*.log logs/
+npm-debug.log* yarn-debug.log* pnpm-debug.log* lerna-debug.log*
 
-==============================
-IDEs and editors
-==============================
-VS Code / Antigravity
+Package manager cache
+
+.npm/ .pnpm-store/
+
+==========================================
+ENVIRONMENT VARIABLES AND SECRETS
+==========================================
+
+.env .env.* !.env.example !.env.*.example
+
+==========================================
+DOCKER
+==========================================
+Local overrides
+
+docker-compose.override.yml compose.override.yaml compose.override.yml
+
+==========================================
+IDEs AND EDITORS
+==========================================
 
 .vscode/ .idea/ *.swp *.swo *~
 
-==============================
-Operating systems
-==============================
+==========================================
+OPERATING SYSTEMS
+==========================================
 
 .DS_Store Thumbs.db Desktop.ini
 
-==============================
-Temporary files
-==============================
+==========================================
+TEMPORARY FILES AND CACHE
+==========================================
 
-tmp/ temp/ .cache/ coverage.out coverage.html
+**/tmp/ **/temp/ **/.cache/
+
+==========================================
+TESTS AND REPORTS
+==========================================
+
+**/test-results/ **/playwright-report/ **/coverage/
