@@ -18,7 +18,7 @@ app.get('/home', (_req: Request, res: Response) => {
 });
 
 // Rutas versionadas
-app.post('/api/v1/stats', getStatistics);
+app.post('/api/v1/statistics', getStatistics);
 
 // Ruta inexistente
 app.use((_req: Request, res: Response) => {

@@ -17,7 +17,7 @@ app.get('/health', (_req, res) => {
     res.json({ status: 'ok' });
 });
 // Rutas versionadas.
-app.post('/api/v1/stats', statistics_controller_1.getStatistics);
+app.post('/api/v1/statistics', statistics_controller_1.getStatistics);
 // Ruta inexistente.
 app.use((_req, res) => {
     res.status(404).json(errorBody('NOT_FOUND', 'ruta no encontrada'));

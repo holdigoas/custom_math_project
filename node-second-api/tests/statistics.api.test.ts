@@ -2,10 +2,10 @@ import { describe, it, expect } from 'vitest';
 import request from 'supertest';
 import app from '../src/app';
 
-describe('POST /api/v1/stats', () => {
+describe('POST /api/v1/statistics', () => {
     it('devuelve las estadísticas', async () => {
         const res = await request(app)
-            .post('/api/v1/stats')
+            .post('/api/v1/statistics')
             .send({ matrices: { q: [[1, 0], [0, 1]], r: [[2, 3], [0, 4]] } });
 
         expect(res.status).toBe(200);
@@ -40,7 +40,7 @@ describe('POST /api/v1/stats', () => {
 
     it.each(errorCases)('error 400 (%s) -> %s', async (_name, body, code) => {
         const res = await request(app)
-            .post('/api/v1/stats')
+            .post('/api/v1/statistics')
             .set('Content-Type', 'application/json')
             .send(body);
 
@@ -49,9 +49,9 @@ describe('POST /api/v1/stats', () => {
     });
 });
 
-describe('GET /health', () => {
+describe('GET /home', () => {
     it('responde ok', async () => {
-        const res = await request(app).get('/health');
+        const res = await request(app).get('/home');
         expect(res.status).toBe(200);
         expect(res.body).toEqual({ status: 'ok' });
     });

@@ -61,7 +61,7 @@ func TestDecompose_Errors(t *testing.T) {
 		{"irregular", [][]float64{{1, 2}, {3}}, ErrIrregularMatrix},
 		{"NaN", [][]float64{{1, math.NaN()}}, ErrInvalidValue},
 		{"Inf", [][]float64{{math.Inf(1), 2}}, ErrInvalidValue},
-		//{"ancha 2x3", [][]float64{{1, 2, 3}, {4, 5, 6}}, ErrWideMatrix},
+		{"valor enorme", [][]float64{{1e101, 1}}, ErrValueTooLarge},
 	}
 
 	for _, tc := range cases {

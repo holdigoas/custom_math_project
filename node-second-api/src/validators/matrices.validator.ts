@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import type { MatricesInput } from '../types';
 
-export const MAX_DIMENSION = 20;
-
+// limite de la dimencion de la matriz
+export const MAX_DIMENSION = 200;
+// Límite de magnitud por valor o cada elemento.
 export const MAX_ABS_VALUE = 1e150;
 
 export class ValidationError extends Error {
@@ -15,6 +16,7 @@ export class ValidationError extends Error {
     }
 }
 
+// definicion del schema zod
 const matrixSchema = z
     .array(
         z
@@ -28,6 +30,7 @@ const matrixSchema = z
         message: 'todas las filas deben tener la misma cantidad de columnas',
     });
 
+// EStructura del cuerpo
 const bodySchema = z.object({
     matrices: z.object({ q: matrixSchema, r: matrixSchema }),
 });

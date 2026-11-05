@@ -7,11 +7,15 @@ import (
 	"gonum.org/v1/gonum/mat"
 )
 
+// valor absoluto maximo permitido
+const MaxAbsValue = 1e100
+
+// mensajes de error
 var (
 	ErrEmptyMatrix     = errors.New("la matriz no puede estar vacía")
 	ErrIrregularMatrix = errors.New("todas las filas deben tener la misma cantidad de columnas")
 	ErrInvalidValue    = errors.New("la matriz contiene valores no válidos (NaN o infinito)")
-	//ErrWideMatrix      = errors.New("la matriz debe tener al menos tantas filas como columnas")
+	ErrValueTooLarge   = errors.New("la matriz contiene valores demasiado grandes (máximo 1e100 en valor absoluto)")
 )
 
 func Decompose(a [][]float64) (q, r [][]float64, err error) {
@@ -21,6 +25,7 @@ func Decompose(a [][]float64) (q, r [][]float64, err error) {
 
 	rows, cols := len(a), len(a[0])
 
+	// identificando k (columnas factorizables por gonum)
 	k := cols
 	if rows < cols {
 		k = rows
@@ -68,6 +73,7 @@ func Decompose(a [][]float64) (q, r [][]float64, err error) {
 	return toSlices(&qm), toSlices(full), nil
 }
 
+// valida que la matriz no sea irregular y sea rectangular
 func validate(a [][]float64) error {
 	if len(a) == 0 || len(a[0]) == 0 {
 		return ErrEmptyMatrix
@@ -81,11 +87,15 @@ func validate(a [][]float64) error {
 			if math.IsNaN(x) || math.IsInf(x, 0) {
 				return ErrInvalidValue
 			}
+			if math.Abs(x) > MaxAbsValue {
+				return ErrValueTooLarge
+			}
 		}
 	}
 	return nil
 }
 
+// convierte la matriz gonum a [][]float64
 func toSlices(m mat.Matrix) [][]float64 {
 	rows, cols := m.Dims()
 	out := make([][]float64, rows)
