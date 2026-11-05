@@ -62,8 +62,6 @@ func errorCode(err error) string {
 		return "IRREGULAR_MATRIX"
 	case errors.Is(err, qr.ErrInvalidValue):
 		return "INVALID_VALUE"
-	case errors.Is(err, qr.ErrWideMatrix):
-		return "WIDE_MATRIX"
 	default:
 		return "INVALID_MATRIX"
 	}
