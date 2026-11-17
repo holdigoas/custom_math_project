@@ -1,0 +1,40 @@
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Dependencias instaladas localmente
+node_modules/
+
+# Control de versiones
+.git
+.gitignore
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.log
+*.tmp
+tmp/
+temp/
+
+# Cobertura de pruebas
+coverage/
+
+# Directorios de compilación
+dist/
+build/
+
+# Cachés
+.npm/
+.cache/
+
+# Archivos de desarrollo
+.vscode/
+.idea/
+
+# Documentación no necesaria para ejecución
+README.md

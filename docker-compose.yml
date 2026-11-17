@@ -1,8 +1,10 @@
 services:
   node-second-api:
     build: ./node-second-api
-    environment:
-      PORT: "3001"
+    env_file:
+      - ./node-second-api/.env
+    # environment:
+    #   PORT: "3001"
     # Sin "ports": solo es accesible desde la red interna de Docker.
     healthcheck:
       test: [ "CMD", "wget", "-qO-", "http://127.0.0.1:3001/home" ]
@@ -14,10 +16,12 @@ services:
 
   go-first-api:
     build: ./go-first-api
-    environment:
-      PORT: "3000"
-      # "node-second-api" es el nombre del servicio: Docker lo resuelve como dirección.
-      NODE_API_URL: http://node-second-api:3001
+    env_file:
+      - ./go-first-api/.env
+    # environment:
+    #   PORT: "3000"
+    #   # "node-second-api" es el nombre del servicio: Docker lo resuelve como dirección.
+    #   NODE_API_URL: http://node-second-api:3001
     ports:
       - "3000:3000"
     depends_on:
