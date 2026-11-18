@@ -36,8 +36,16 @@ jobs:
           docker push acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
 
       - name: Deploy to Azure Container Apps
-        uses: azure/container-apps-deploy-action@v2
-        with:
-          containerAppName: node-second-api
-          resourceGroup: group_math_hds2
-          imageToDeploy: acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
+        run: |
+          IDENTITY_ID="/subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/group_math_hds2/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identidad-math-deploy"
+
+          az containerapp registry set \
+            --name node-second-api \
+            --resource-group group_math_hds2 \
+            --server acrmath2-e8gufkcsh9ezhbge.azurecr.io \
+            --identity "$IDENTITY_ID"
+
+          az containerapp update \
+            --name node-second-api \
+            --resource-group group_math_hds2 \
+            --image acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
