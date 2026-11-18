@@ -32,12 +32,12 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t acrmath2.azurecr.io/node-second-api:${{ github.sha }} ./node-second-api
-          docker push acrmath2.azurecr.io/node-second-api:${{ github.sha }}
+          docker build -t acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }} ./node-second-api
+          docker push acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
 
       - name: Deploy to Azure Container Apps
         uses: azure/container-apps-deploy-action@v2
         with:
           containerAppName: node-second-api
           resourceGroup: group_math_hds2
-          imageToDeploy: acrmath2.azurecr.io/node-second-api:${{ github.sha }}
+          imageToDeploy: acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
