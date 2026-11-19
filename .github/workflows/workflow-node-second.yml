@@ -1,0 +1,73 @@
+name: CI/CD Node Second API
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'node-second-api/**'
+      - '.github/workflows/workflow-node-second.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'node-second-api/**'
+      - '.github/workflows/workflow-node-second.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Unit & Integration Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: 'node-second-api/package-lock.json'
+
+      - name: Install dependencies & Run tests
+        working-directory: ./node-second-api
+        run: |
+          npm ci
+          npm test
+
+  build-and-deploy:
+    name: Build Image & Deploy to Azure
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC Sin Contraseñas)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Login to ACR via Managed Identity
+        run: az acr login --name acrmath2
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }} ./node-second-api
+          docker push acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
+
+      - name: Deploy to Azure Container Apps
+        run: |
+          az containerapp update \
+            --name node-second-api \
+            --resource-group group_math_hds2 \
+            --image acrmath2-e8gufkcsh9ezhbge.azurecr.io/node-second-api:${{ github.sha }}
